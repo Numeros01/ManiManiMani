@@ -1,0 +1,19 @@
+package com.example.manimanimani.ui.dialogManagers
+
+enum class DialogState {
+    NONE,
+    EDIT_RECEIPT_REASON,
+    EDIT_RECEIPT_MONEY,
+    EDIT_RECEIPT_DESC,
+    ADD_REASON,
+    EDIT_REASON,
+    EDIT_REASON_DESC,
+    EDIT_REASON_TAGS,
+    ADD_TAG,
+    EDIT_TAG,
+    SUM,
+    CONFIRM_WIPE_RECEIPTS,
+    CONFIRM_DELETE_RECEIPT,
+    CONFIRM_DELETE_REASON,
+    CONFIRM_DELETE_TAG
+}

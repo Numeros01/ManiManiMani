@@ -1,0 +1,19 @@
+package com.example.manimanimani.ui.components
+
+enum class ErrorState {
+    NONE,
+    RECEIPT_INVALID,
+    RECEIPT_AMOUNT_INVALID,
+    RECEIPT_AMOUNT_OOB,
+    RECEIPT_REASON_OOB,
+    RECEIPT_DESC_OOB,
+    REASON_INVALID,
+    REASON_AMOUNT_OOB,
+    REASON_AMOUNT_INVALID,
+    REASON_NAME_OOB,
+    REASON_DESC_OOB,
+    TAG_INVALID,
+    TAG_NAME_OOB,
+    REASON_DUPLICATE,
+    TAG_DUPLICATE
+}
