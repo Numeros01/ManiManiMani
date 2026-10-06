@@ -10,7 +10,8 @@ data class Reason (
     val id: Int = 0,
     var name: String,
     var description: String = "",
-    var constAmount: Int? = null
+    var constAmount: Int? = null,
+    var isHidden: Boolean = false
 )
 
 val reasonZero = Reason(

@@ -11,6 +11,10 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -37,6 +41,8 @@ fun NavGraph(
             .value
             ?.destination
             ?.route
+
+    var doHideHidden by remember { mutableStateOf(true) }
 
     Scaffold(
         bottomBar = {
@@ -114,7 +120,8 @@ fun NavGraph(
                 MainScreen(
                     vm = MMMViewModel,
                     dm = MMMDialogManager,
-                    em = MMMErrorManager
+                    em = MMMErrorManager,
+                    doHide = doHideHidden
                 )
             }
             composable("data") {
@@ -122,7 +129,9 @@ fun NavGraph(
                     vm = MMMViewModel,
                     dm = MMMDialogManager,
                     em = MMMErrorManager,
-                    navController
+                    navController,
+                    doHide = doHideHidden,
+                    setHide = {yes -> doHideHidden = yes}
                 )
             }
         }

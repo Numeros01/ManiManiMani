@@ -13,7 +13,7 @@ interface ReceiptDAO {
     @Query("SELECT * FROM Receipt WHERE 1=1")
     fun getReceipts(): Flow<List<Receipt>>
 
-    @Query("DELETE FROM Receipt WHERE 1=1")
+    @Query("DELETE FROM Receipt WHERE isHidden = 0")
     suspend fun deleteAllReceipts()
 
     @Insert

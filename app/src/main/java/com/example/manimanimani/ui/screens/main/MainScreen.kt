@@ -61,7 +61,8 @@ import kotlinx.coroutines.launch
 fun MainScreen(
     vm: ReceiptViewModel,
     dm: DialogManager,
-    em: ErrorManager
+    em: ErrorManager,
+    doHide: Boolean
 ) {
     val receipts by vm.receipts.collectAsState()
     val reasons by vm.reasons.collectAsState()
@@ -153,19 +154,21 @@ fun MainScreen(
                         .background(color = DarkGray, shape = RoundedCornerShape(16.dp))
                 ) {
                     reasons.forEach { reason: Reason ->
-                        DropdownMenuItem(
-                            text = {
-                                Text(reason.name)
-                            },
-                            onClick = {
-                                selectedReason = reason
-                                isDropdownExpanded = false
-                                if(selectedReason?.constAmount != null)
-                                    moneyAmount = selectedReason?.constAmount.toString()
-                            },
-                            modifier = Modifier
-                                .background(DarkGray)
-                        )
+                        if(!doHide || !reason.isHidden) {
+                            DropdownMenuItem(
+                                text = {
+                                    Text(reason.name)
+                                },
+                                onClick = {
+                                    selectedReason = reason
+                                    isDropdownExpanded = false
+                                    if (selectedReason?.constAmount != null)
+                                        moneyAmount = selectedReason?.constAmount.toString()
+                                },
+                                modifier = Modifier
+                                    .background(DarkGray)
+                            )
+                        }
                     }
                 }
             }
@@ -272,7 +275,8 @@ fun MainScreen(
                             amount = moneyAmount.toInt(),
                             reason = selectedReason,
                             reasonText = text,
-                            description = desc
+                            description = desc,
+                            isHidden = selectedReason?.isHidden ?: false
                         )
                         manualReason = ""
                         selectedReason = null

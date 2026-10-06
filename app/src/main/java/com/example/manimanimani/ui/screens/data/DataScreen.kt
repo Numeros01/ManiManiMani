@@ -36,7 +36,9 @@ fun DataScreen(
     vm: ReceiptViewModel,
     dm: DialogManager,
     em: ErrorManager,
-    navController: NavController
+    navController: NavController,
+    doHide: Boolean,
+    setHide: (yes: Boolean) -> Unit
 ) {
     val receipts by vm.receipts.collectAsState()
     val reasons by vm.reasons.collectAsState()
@@ -51,8 +53,6 @@ fun DataScreen(
     var selectedReceipt by remember {mutableStateOf(receiptZero)}
     var selectedReason by remember {mutableStateOf(reasonZero)}
     var selectedTag by remember {mutableStateOf(tagZero)}
-
-    var doHideHidden by remember { mutableStateOf(true) }
 
     val scope = rememberCoroutineScope()
 
@@ -151,7 +151,7 @@ fun DataScreen(
                         onClickReason = { selectedReason = it },
                         onClickTag = { selectedTag = it },
                         modifier = Modifier.fillMaxSize(),
-                        doHide = doHideHidden
+                        doHide = doHide
                     )
                 }
             }
@@ -177,8 +177,6 @@ fun DataScreen(
         selectedTag = selectedTag,
         receipts = receipts,
         tagToReasons = tagToReasons,
-        onHide = { yes: Boolean ->
-            doHideHidden = yes
-        }
+        onHide = { yes: Boolean -> setHide(yes) }
     )
 }

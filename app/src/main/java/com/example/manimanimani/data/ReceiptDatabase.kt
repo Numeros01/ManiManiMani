@@ -18,7 +18,7 @@ import com.example.manimanimani.data.dao.TagToReasonDAO
         ReasonTag::class,
         TagToReason::class
     ],
-    version = 6,
+    version = 7,
     exportSchema = false
 )
 abstract class ReceiptDatabase : RoomDatabase() {

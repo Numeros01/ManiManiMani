@@ -9,6 +9,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.room.Room
 import com.example.manimanimani.data.MIGRATION_4_5
 import com.example.manimanimani.data.MIGRATION_5_6
+import com.example.manimanimani.data.MIGRATION_6_7
 import com.example.manimanimani.data.ReceiptDatabase
 import com.example.manimanimani.data.repositories.ReasonRepository
 import com.example.manimanimani.data.repositories.ReasonTagRepository
@@ -33,7 +34,8 @@ class MainActivity : ComponentActivity() {
         )
             .addMigrations(
                 MIGRATION_4_5,
-                MIGRATION_5_6
+                MIGRATION_5_6,
+                MIGRATION_6_7
             )
             .build()
 

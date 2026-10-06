@@ -55,7 +55,8 @@ class ReceiptViewModel(
         reason: Reason? = null,
         reasonText: String = "",
         description: String = "",
-        creation_time: Long = 0L
+        creation_time: Long = 0L,
+        isHidden: Boolean = false
     ) {
         var time = creation_time
         if(time == 0L)
@@ -68,7 +69,8 @@ class ReceiptViewModel(
                     reason_id = reason?.id,
                     reasonText = reasonText,
                     description = description,
-                    creation_time = time
+                    creation_time = time,
+                    isHidden = isHidden
                 )
             )
         }
@@ -122,6 +124,14 @@ class ReceiptViewModel(
     fun updateReason(reason: Reason) {
         viewModelScope.launch {
             reasonRepo.updateReason(reason)
+        }
+    }
+
+    fun hideReason(reason: Reason, doHide: Boolean) {
+        viewModelScope.launch {
+            reasonRepo.updateReason(reason.copy(
+                isHidden = doHide
+            ))
         }
     }
 

@@ -25,8 +25,10 @@ fun ReasonRow(
     onEdit: () -> Unit,
     onEditDesc: () -> Unit,
     onEditTags: () -> Unit,
+    onHide: (yes: Boolean) -> Unit,
     onDelete: () -> Unit,
-    isSelected: Boolean = false
+    isSelected: Boolean = false,
+    doHide: Boolean
 ) {
     var isMenuExpanded by remember { mutableStateOf(false) }
 
@@ -38,10 +40,13 @@ fun ReasonRow(
             .clickable {onClick()},
         colors = CardDefaults.cardColors(
             containerColor =
-                if (isSelected)
-                    MMMAccent
-                else
-                    DarkGray
+                if (reason.isHidden) {
+                    if (isSelected) MMMAccentDark
+                    else DarkerGray
+                } else {
+                    if(isSelected) MMMAccent
+                    else DarkGray
+                }
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = if(isSelected) 8.dp else 2.dp
@@ -72,6 +77,15 @@ fun ReasonRow(
                     Text(
                         text = reason.description,
                         color = MutedGray
+                    )
+                }
+
+                if(isSelected && reason.isHidden) {
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = "Hidden",
+                        color = SoftDark
                     )
                 }
             }
@@ -127,6 +141,21 @@ fun ReasonRow(
                             onEditTags()
                         }
                     )
+
+                    if(!doHide) {
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    text = if (reason.isHidden) "Show"
+                                            else "Hide",
+                                    color = SoftWhite
+                                )
+                            },
+                            onClick = {
+                                onHide(!reason.isHidden)
+                            }
+                        )
+                    }
 
                     DropdownMenuItem(
                         text = {Text(

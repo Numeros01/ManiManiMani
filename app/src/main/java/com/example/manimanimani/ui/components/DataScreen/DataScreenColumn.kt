@@ -64,17 +64,21 @@ fun DataScreenColumn(
 
             1 -> { // Reasons
                 items(reasons) { reason: Reason ->
-                    ReasonRow(
-                        reason = reason,
-                        onClick = { onClickReason(reason) },
-                        onEdit = {dm.openDialog(DialogState.EDIT_REASON)},
-                        onEditDesc = {dm.openDialog(DialogState.EDIT_REASON_DESC)},
-                        onEditTags = {dm.openDialog(DialogState.EDIT_REASON_TAGS)},
-                        onDelete = {dm.openDialog(DialogState.CONFIRM_DELETE_REASON)},
-                        isSelected = (
-                            selectedReason != reasonZero && selectedReason.id == reason.id
+                    if(!reason.isHidden || !doHide) {
+                        ReasonRow(
+                            reason = reason,
+                            onClick = { onClickReason(reason) },
+                            onEdit = { dm.openDialog(DialogState.EDIT_REASON) },
+                            onEditDesc = { dm.openDialog(DialogState.EDIT_REASON_DESC) },
+                            onEditTags = { dm.openDialog(DialogState.EDIT_REASON_TAGS) },
+                            onHide = {yes -> vm.hideReason(reason, yes)},
+                            onDelete = { dm.openDialog(DialogState.CONFIRM_DELETE_REASON) },
+                            isSelected = (
+                                selectedReason != reasonZero && selectedReason.id == reason.id
+                            ),
+                            doHide = doHide
                         )
-                    )
+                    }
                 }
             }
 

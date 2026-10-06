@@ -51,3 +51,36 @@ public val MIGRATION_5_6 = object : Migration(5, 6) {
         db.execSQL("ALTER TABLE Receipt_new RENAME TO Receipt")
     }
 }
+
+public val MIGRATION_6_7 = object : Migration(6, 7) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("""
+            CREATE TABLE Reason_new (
+                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                description TEXT NOT NULL,
+                constAmount INTEGER,
+                isHidden INTEGER NOT NULL
+            )
+        """.trimIndent())
+
+        db.execSQL("""
+            INSERT INTO Reason_new (
+                name,
+                description,
+                constAmount,
+                isHidden
+            )
+            SELECT
+                name,
+                description,
+                constAmount,
+                0
+            FROM Reason
+        """.trimIndent())
+
+        db.execSQL("DROP TABLE Reason")
+
+        db.execSQL("ALTER TABLE Reason_new RENAME TO Reason")
+    }
+}
